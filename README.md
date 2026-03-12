@@ -1,7 +1,13 @@
 # Grid Map Reinforcement Learning Project
 
 A Reinforcement Learning (RL) project structured around the **CRISP-DM (Cross-Industry Standard Process for Data Mining)** methodology. This project implements an interactive web application that allows users to configure start points, end points, and obstacles on a customizable grid map. It demonstrates backend computations for "Random Policy Evaluation" and "Optimal Path Finding (Value Iteration)" through an intuitive graphical interface.  
-Liev Demo: https://bytseng.dpdns.org/DRL_HW1/
+Liev Demo: https://bytseng.dpdns.org/DRL_HW1/  
+<img width="722" height="724" alt="image" src="https://github.com/user-attachments/assets/d36355ca-13a9-4d3f-9a9c-864816452563" />
+<img width="722" height="724" alt="image" src="https://github.com/user-attachments/assets/fd893c21-317f-47a5-8683-56bbf1d5230b" />
+<img width="1149" height="519" alt="image" src="https://github.com/user-attachments/assets/dac0c0aa-3e93-4d63-a3ee-1565ce76a85b" />
+<img width="1149" height="519" alt="image" src="https://github.com/user-attachments/assets/85f70fcb-d708-497e-952f-439866679d1b" />
+
+
 
 ---
 
