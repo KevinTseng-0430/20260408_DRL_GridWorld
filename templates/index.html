@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HW1 — {{ n }}×{{ n }} Grid Map & Policy Evaluation</title>
+  <meta name="description" content="HW1 interactive n×n grid map with RL policy evaluation." />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+
+  <h1>HW1 · Grid Map & Policy Evaluation</h1>
+  <p class="subtitle">Reinforcement Learning — Interactive Grid Editor + Policy Evaluation</p>
+
+  <!-- ══ HW1-1: Grid Setup ═════════════════════════════════════════════════ -->
+  <div class="card">
+    <form class="form-row" method="get" action="/">
+      <label for="n-input">Grid size (5 – 9):</label>
+      <input id="n-input" type="number" name="n" min="5" max="9" value="{{ n }}" required />
+      <button class="btn" type="submit">Generate {{ n }} × {{ n }}</button>
+    </form>
+
+    <!-- Status Badges -->
+    <div class="status-bar">
+      <div class="badge start-badge">
+        <div class="badge-dot"></div>
+        <span id="badge-start">Start: not set</span>
+      </div>
+      <div class="badge end-badge">
+        <div class="badge-dot"></div>
+        <span id="badge-end">End: not set</span>
+      </div>
+      <div class="badge obs-badge">
+        <div class="badge-dot"></div>
+        <span id="badge-obs">Obstacles: 0 / {{ n - 2 }}</span>
+      </div>
+    </div>
+
+    <!-- Instructions -->
+    <p class="instruction">
+      <span>1st click</span> → Start (green) &nbsp;·&nbsp;
+      <span>2nd click</span> → End (red) &nbsp;·&nbsp;
+      <span>3rd+ click</span> → Obstacle (gray, max {{ n - 2 }}) &nbsp;·&nbsp;
+      Click coloured cell to <span>deselect</span>.
+    </p>
+
+    <!-- Grid -->
+    <div class="grid-wrapper">
+      <table class="grid" id="grid" data-max-obs="{{ n - 2 }}" data-n="{{ n }}">
+        <tbody>
+          {% for row in range(n) %}
+          <tr>
+            {% for col in range(n) %}
+            <td data-row="{{ row }}" data-col="{{ col }}">
+              {{ row * n + col + 1 }}
+            </td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Evaluate button -->
+    <div style="display: flex; gap: 16px; margin-top: 20px;">
+      <button class="btn btn-eval" id="btn-evaluate" disabled>
+        🧠 Evaluate Policy (Random)
+      </button>
+      <button class="btn btn-eval" id="btn-optimize" disabled
+        style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+        🌟 Find Optimal Path (V*)
+      </button>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#22c55e;"></div> Start
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#ef4444;"></div> End
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#6b7280;"></div> Obstacle (max {{ n - 2 }})
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#1e2235; border:1px solid #2e3248;"></div> Free
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ HW1-2: RL Results ════════════════════════════════════════════════ -->
+  <div id="rl-results" style="display:none; width:100%; max-width:1100px;">
+
+    <div class="rl-params" style="justify-content:center; margin-bottom:24px;">
+      <div class="param-chip">γ = 0.9</div>
+      <div class="param-chip">Reward = −1 / step</div>
+      <div class="param-chip">R(end) = +10, V(end) = 0</div>
+      <div class="param-chip">Obstacles are walls</div>
+    </div>
+
+    <div class="matrices-row">
+
+      <!-- Policy Matrix -->
+      <div class="matrix-card">
+        <h2 class="policy-title">🗺 Policy Matrix</h2>
+        <p class="instruction" style="margin-bottom:16px;">
+          Each free cell shows its <span>randomly generated action</span> (↑ ↓ ← →).
+        </p>
+        <div class="grid-wrapper">
+          <div id="policy-grid-container"></div>
+        </div>
+      </div>
+
+      <!-- Value Matrix -->
+      <div class="matrix-card">
+        <h2 class="value-title">📈 Value Matrix V(s)</h2>
+        <p class="instruction" style="margin-bottom:16px;">
+          Computed via <span>iterative policy evaluation</span> until convergence.
+        </p>
+        <div class="grid-wrapper">
+          <div id="value-grid-container"></div>
+        </div>
+      </div>
+
+    </div><!-- /.matrices-row -->
+  </div><!-- /#rl-results -->
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
