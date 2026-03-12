@@ -69,7 +69,3 @@
     *   **Git 部署作業**：
         自動在本地編寫 shell 指令，執行 `git init`, `add`, `commit -m "Initial commit"`，並設定 remote url 推送 (Push) 到 `https://github.com/KevinTseng-0430/20260408_DRL_GridWorld.git`。
     *   這確保了我們這段精彩的開發旅程，都有完美的軌跡可尋且可供開源社群參考。
-
----
-*這份文件見證了我們從需求分析、網格設計、數學模型轉換，一路到除錯優化、技術文件彙整的協同開發歷程。*
-*紀錄時間：2026-03-12 (Local Time)*
